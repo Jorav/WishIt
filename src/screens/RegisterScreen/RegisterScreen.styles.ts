@@ -1,14 +1,18 @@
 import { StyleSheet } from 'react-native'
 import { COLORS } from '../../constants/Colors'
-import { SPACING } from '../../constants/Spacing'
+import { SPACING } from '../../constants/Spacing'  
 import { TYPOGRAPHY } from '../../constants/Typography'
 
-export const loginStyles = StyleSheet.create({
+export const registerStyles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: COLORS.white
+  },
+  
+  contentContainer: {
+    flexGrow: 1,
     padding: SPACING.lg,
     justifyContent: 'center',
-    backgroundColor: COLORS.white
   },
   
   header: {
@@ -51,12 +55,5 @@ export const loginStyles = StyleSheet.create({
   linkText: {
     color: COLORS.primary,
     fontWeight: TYPOGRAPHY.weights.medium
-  },
-  
-  testInfo: {
-    fontSize: TYPOGRAPHY.sizes.small,
-    color: COLORS.gray,
-    marginTop: SPACING.sm,
-    fontStyle: 'italic'
   }
 })

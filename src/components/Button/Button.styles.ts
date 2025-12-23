@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { COLORS } from '../../constants/Colors'
-import { SPACING } from '../../constants/Spacing'  
+import { SPACING } from '../../constants/Spacing'
 import { TYPOGRAPHY } from '../../constants/Typography'
 
 export const buttonStyles = StyleSheet.create({
@@ -32,5 +32,13 @@ export const buttonStyles = StyleSheet.create({
     color: COLORS.primary,
     fontSize: TYPOGRAPHY.sizes.medium,
     fontWeight: TYPOGRAPHY.weights.bold
+  },
+  
+  disabled: {
+    opacity: 0.5
+  },
+  
+  textDisabled: {
+    opacity: 0.7
   }
 })
