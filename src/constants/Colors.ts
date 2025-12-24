@@ -5,6 +5,5 @@ export const COLORS = {
   lightGray: '#F2F2F7',
   text: '#000000',
   error: '#FF3B30',
-  success: '#34C759',
   border: '#E5E5EA'
 }

@@ -50,12 +50,16 @@ export default function RegisterScreen({ navigation }: any) {
       const { confirmPassword, ...registrationData } = formData
       const response = await registerApi.createAccount(registrationData)
       await authUtils.storeToken(response.token)
+      
       Alert.alert(
         'Success!',
         'Account created successfully!',
-        [{ text: 'OK', onPress: () => {
-          console.log('Navigate to home screen')
-        }}]
+        [{ 
+          text: 'OK', 
+          onPress: () => {
+            navigation.replace('Home')
+          }
+        }]
       )
     } catch (error) {
       Alert.alert('Registration Failed', (error as Error).message || 'Something went wrong')

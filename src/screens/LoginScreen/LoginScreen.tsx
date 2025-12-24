@@ -44,12 +44,9 @@ export default function LoginScreen({ navigation }: any) {
     try {
       const response = await loginApi.authenticateUser(formData)
       await authUtils.storeToken(response.token)
-      Alert.alert(
-        'Welcome!',
-        `Hello ${response.fullName}!`,
-        [{ text: 'OK' }]
-      )
-      console.log('Login successful, navigate to main app')
+      
+      navigation.replace('Home')
+      
     } catch (error) {
       Alert.alert('Login Failed', (error as Error).message || 'Invalid credentials')
     } finally {
