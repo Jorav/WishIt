@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { COLORS } from '../../constants/Colors'
-import { SPACING } from '../../constants/Spacing'  
+import { SPACING } from '../../constants/Spacing'
 import { TYPOGRAPHY } from '../../constants/Typography'
 
 export const inputStyles = StyleSheet.create({
@@ -17,13 +17,15 @@ export const inputStyles = StyleSheet.create({
   },
   
   inputFocused: {
-    borderWidth: 2,
-    borderColor: COLORS.primary
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+    backgroundColor: COLORS.white
   },
   
   label: {
     fontSize: TYPOGRAPHY.sizes.small,
     color: COLORS.gray,
-    marginBottom: SPACING.xs
+    marginBottom: SPACING.xs,
+    fontWeight: TYPOGRAPHY.weights.medium
   }
 })

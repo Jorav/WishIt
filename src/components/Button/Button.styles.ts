@@ -8,8 +8,7 @@ export const buttonStyles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     padding: SPACING.md,
     borderRadius: SPACING.sm,
-    alignItems: 'center',
-    marginVertical: SPACING.sm
+    alignItems: 'center'
   },
   
   secondary: {
@@ -18,8 +17,7 @@ export const buttonStyles = StyleSheet.create({
     borderColor: COLORS.primary,
     padding: SPACING.md,
     borderRadius: SPACING.sm,
-    alignItems: 'center',
-    marginVertical: SPACING.sm
+    alignItems: 'center'
   },
   
   text: {

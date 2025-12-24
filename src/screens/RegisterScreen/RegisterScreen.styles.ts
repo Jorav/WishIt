@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { COLORS } from '../../constants/Colors'
-import { SPACING } from '../../constants/Spacing'  
+import { SPACING } from '../../constants/Spacing'
 import { TYPOGRAPHY } from '../../constants/Typography'
 
 export const registerStyles = StyleSheet.create({
@@ -9,15 +9,11 @@ export const registerStyles = StyleSheet.create({
     backgroundColor: COLORS.white
   },
   
-  contentContainer: {
-    flexGrow: 1,
-    padding: SPACING.lg,
-    justifyContent: 'center',
-  },
-  
   header: {
     alignItems: 'center',
-    marginBottom: SPACING.xl
+    marginBottom: SPACING.xl,
+    marginTop: SPACING.xl,
+    paddingHorizontal: SPACING.lg
   },
   
   title: {
@@ -27,23 +23,21 @@ export const registerStyles = StyleSheet.create({
     marginBottom: SPACING.sm
   },
   
-  subtitle: {
-    fontSize: TYPOGRAPHY.sizes.medium,
-    color: COLORS.gray,
-    textAlign: 'center'
-  },
-  
   form: {
-    marginBottom: SPACING.lg
+    paddingHorizontal: SPACING.lg,
+    marginBottom: SPACING.xl
   },
   
   buttonContainer: {
-    gap: SPACING.sm
+    gap: SPACING.sm,
+    paddingHorizontal: SPACING.lg,
+    marginBottom: SPACING.xl
   },
   
   footer: {
     alignItems: 'center',
-    marginTop: SPACING.lg
+    paddingHorizontal: SPACING.lg,
+    paddingBottom: SPACING.xl * 2
   },
   
   footerText: {

@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { View, Text, Alert, ScrollView } from 'react-native'
 import Button from '../../components/Button/Button'
-import Input from '../../components/Input/Input'
+import ValidatedInput from '../../components/Input/ValidatedInput/ValidatedInput'
+import EmailInput from '../../components/Input/ValidatedInput/EmailInput'
+import PasswordInput from '../../components/Input/ValidatedInput/PasswordInput'
+import ConfirmPasswordInput from '../../components/Input/ValidatedInput//ConfirmPasswordInput'
 import { registerApi } from './RegisterScreen.api'
 import { authUtils } from '../../services/authUtils'
-import { validation } from '../../services/validation'
 import { registerStyles } from './RegisterScreen.styles'
 
 interface RegisterFormData {
@@ -14,7 +16,7 @@ interface RegisterFormData {
   confirmPassword: string
 }
 
-export default function RegisterScreen() {
+export default function RegisterScreen({ navigation }: any) {
   const [formData, setFormData] = useState<RegisterFormData>({
     fullName: '',
     email: '',
@@ -27,25 +29,19 @@ export default function RegisterScreen() {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const validateForm = (): string | null => {
+  const isFormValid = (): boolean => {
     const { fullName, email, password, confirmPassword } = formData
-
-    if (!validation.required(fullName)) return 'Please enter your full name'
-    if (!validation.required(email)) return 'Please enter your email'
-    if (!validation.email(email)) return 'Please enter a valid email address'
-    
-    const passwordValidation = validation.password(password)
-    if (!passwordValidation.isValid) return passwordValidation.message!
-    
-    if (password !== confirmPassword) return 'Passwords do not match'
-
-    return null
+    return (
+      fullName.trim().length > 0 &&
+      email.includes('@') && email.includes('.') &&
+      password.length >= 6 &&
+      password === confirmPassword
+    )
   }
 
   const handleRegister = async () => {
-    const validationError = validateForm()
-    if (validationError) {
-      Alert.alert('Validation Error', validationError)
+    if (!isFormValid()) {
+      Alert.alert('Form Error', 'Please fix the errors above before continuing.')
       return
     }
 
@@ -53,14 +49,13 @@ export default function RegisterScreen() {
     try {
       const { confirmPassword, ...registrationData } = formData
       const response = await registerApi.createAccount(registrationData)
-      
-      // Store auth token
       await authUtils.storeToken(response.token)
-      
       Alert.alert(
-        'Success!', 
+        'Success!',
         'Account created successfully!',
-        [{ text: 'OK' }]
+        [{ text: 'OK', onPress: () => {
+          console.log('Navigate to home screen')
+        }}]
       )
     } catch (error) {
       Alert.alert('Registration Failed', (error as Error).message || 'Something went wrong')
@@ -69,64 +64,46 @@ export default function RegisterScreen() {
     }
   }
 
-  const handleBackToLogin = () => {
-    console.log('Navigate back to login')
-    // Later: navigation.goBack()
-  }
-
   return (
-    <ScrollView style={registerStyles.container} showsVerticalScrollIndicator={false}>
-      <View style={registerStyles.header}>
-        <Text style={registerStyles.title}>Create Account</Text>
-        <Text style={registerStyles.subtitle}>Join WishIt and start sharing your wishes</Text>
+    <ScrollView
+      style={registerStyles.container}
+      contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+    >
+      <View>
+        <View style={registerStyles.header}>
+          <Text style={registerStyles.title}>Create Account</Text>
+        </View>
+        <View style={registerStyles.form}>
+          <ValidatedInput
+            label="Full Name"
+            placeholder="Enter your full name"
+            value={formData.fullName}
+            onChangeText={(value: string) => updateField('fullName', value)}
+          />
+          <EmailInput
+            value={formData.email}
+            onChangeText={(value: string) => updateField('email', value)}
+          />
+          <PasswordInput
+            value={formData.password}
+            onChangeText={(value: string) => updateField('password', value)}
+          />
+          <ConfirmPasswordInput
+            value={formData.confirmPassword}
+            onChangeText={(value: string) => updateField('confirmPassword', value)}
+            originalPassword={formData.password}
+          />
+        </View>
+        <View style={registerStyles.buttonContainer}>
+          <Button
+            title={isLoading ? "Creating Account..." : "Create Account"}
+            onPress={handleRegister}
+            disabled={isLoading || !isFormValid()}
+          />
+        </View>
       </View>
-      
-    <View style={registerStyles.header}>
-        <Input
-          label="Full Name"
-          placeholder="Enter your full name"
-          value={formData.fullName}
-          onChangeText={(value) => updateField('fullName', value)}
-        />
-        
-        <Input
-          label="Email"
-          placeholder="Enter your email address"
-          value={formData.email}
-          onChangeText={(value) => updateField('email', value)}
-        />
-        
-        <Input
-          label="Password"
-          placeholder="Create a password"
-          value={formData.password}
-          onChangeText={(value) => updateField('password', value)}
-          secureTextEntry
-        />
-        
-        <Input
-          label="Confirm Password"
-          placeholder="Confirm your password"
-          value={formData.confirmPassword}
-          onChangeText={(value) => updateField('confirmPassword', value)}
-          secureTextEntry
-        />
-      </View>
-      
-      <View style={registerStyles.buttonContainer}>
-        <Button 
-          title={isLoading ? "Creating Account..." : "Create Account"}
-          onPress={handleRegister}
-          disabled={isLoading}
-        />
-        
-        <Button 
-          title="Back to Login" 
-          onPress={handleBackToLogin}
-          variant="secondary"
-        />
-      </View>
-      
       <View style={registerStyles.footer}>
         <Text style={registerStyles.footerText}>
           By creating an account, you agree to our{'\n'}

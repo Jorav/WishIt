@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Alert } from 'react-native'
+import { View, Text, Alert, TouchableOpacity } from 'react-native'
 import Button from '../../components/Button/Button'
 import Input from '../../components/Input/Input'
 import { loginApi } from './LoginScreen.api'
@@ -30,7 +30,7 @@ export default function LoginScreen({ navigation }: any) {
     if (!validation.email(email)) return 'Please enter a valid email address'
     if (!validation.required(password)) return 'Please enter your password'
 
-    return null // No errors
+    return null
   }
 
   const handleLogin = async () => {
@@ -43,19 +43,13 @@ export default function LoginScreen({ navigation }: any) {
     setIsLoading(true)
     try {
       const response = await loginApi.authenticateUser(formData)
-      
-      // Store auth token
       await authUtils.storeToken(response.token)
-      
       Alert.alert(
         'Welcome!',
         `Hello ${response.fullName}!`,
         [{ text: 'OK' }]
       )
-      
-      //navigation.navigate('Home')
       console.log('Login successful, navigate to main app')
-      
     } catch (error) {
       Alert.alert('Login Failed', (error as Error).message || 'Invalid credentials')
     } finally {
@@ -64,7 +58,6 @@ export default function LoginScreen({ navigation }: any) {
   }
 
   const handleRegister = () => {
-    console.log('Navigate to register screen')
     navigation.navigate('Register')
   }
 
@@ -73,7 +66,6 @@ export default function LoginScreen({ navigation }: any) {
       email: 'test@wishit.com',
       password: 'test123'
     })
-    Alert.alert('Test User', 'Test credentials filled! Tap Sign In to login.')
   }
 
   return (
@@ -90,7 +82,6 @@ export default function LoginScreen({ navigation }: any) {
           value={formData.email}
           onChangeText={(value) => updateField('email', value)}
         />
-        
         <Input
           label="Password"
           placeholder="Enter your password"
@@ -101,22 +92,14 @@ export default function LoginScreen({ navigation }: any) {
       </View>
       
       <View style={loginStyles.buttonContainer}>
-        <Button 
+        <Button
           title={isLoading ? "Signing In..." : "Sign In"}
           onPress={handleLogin}
           disabled={isLoading}
         />
-        
-        <Button 
-          title="Create Account" 
+        <Button
+          title="Create Account"
           onPress={handleRegister}
-          variant="secondary"
-        />
-        
-        {/* Test user button - remove in production */}
-        <Button 
-          title="🧪 Fill Test User"
-          onPress={fillTestUser}
           variant="secondary"
         />
       </View>
@@ -126,9 +109,11 @@ export default function LoginScreen({ navigation }: any) {
           Forgot your password?{' '}
           <Text style={loginStyles.linkText}>Reset it here</Text>
         </Text>
-        <Text style={loginStyles.testInfo}>
-          Test: test@wishit.com / test123
-        </Text>
+        <TouchableOpacity onPress={fillTestUser}>
+          <Text style={loginStyles.testInfo}>
+            Test: test@wishit.com / test123
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
