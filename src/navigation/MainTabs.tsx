@@ -3,10 +3,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import WishScreen from '../screens/WishScreen/WishScreen'
 import GiftScreen from '../screens/GiftScreen/GiftScreen'
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen'
+import WishTabIcon from './WishTabIcon'
+import GiftTabIcon from './GiftTabIcon'
+import ProfileTabIcon from './ProfileTabIcon'
 import { COLORS } from '../constants/Colors'
-
+  
 const Tab = createBottomTabNavigator()
-
+  
 export default function MainTabs() {
   return (
     <Tab.Navigator
@@ -21,25 +24,37 @@ export default function MainTabs() {
         }
       }}
     >
-      <Tab.Screen 
-        name="Wish" 
+      <Tab.Screen
+        name="Wish"
         component={WishScreen}
         options={{
-          tabBarLabel: 'Wish'
+          tabBarLabel: 'Wish',
+          // eslint-disable-next-line react/no-unstable-nested-components
+          tabBarIcon: ({ color, size }) => (
+            <WishTabIcon size={size} color={color} />
+          )
         }}
       />
-      <Tab.Screen 
-        name="Gift" 
+      <Tab.Screen
+        name="Gift"
         component={GiftScreen}
         options={{
-          tabBarLabel: 'Gift'
+          tabBarLabel: 'Gift',
+          // eslint-disable-next-line react/no-unstable-nested-components
+          tabBarIcon: ({ color, size }) => (
+            <GiftTabIcon size={size} color={color} />
+          )
         }}
       />
-      <Tab.Screen 
-        name="Profile" 
+      <Tab.Screen
+        name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarLabel: 'Profile'
+          tabBarLabel: 'Profile',
+          // eslint-disable-next-line react/no-unstable-nested-components
+          tabBarIcon: ({ color, size }) => (
+            <ProfileTabIcon size={size} color={color} />
+          )
         }}
       />
     </Tab.Navigator>
