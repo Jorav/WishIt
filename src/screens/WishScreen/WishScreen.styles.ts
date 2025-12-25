@@ -3,7 +3,7 @@ import { COLORS } from '../../constants/Colors'
 import { SPACING } from '../../constants/Spacing'
 import { TYPOGRAPHY } from '../../constants/Typography'
 
-export const homeStyles = StyleSheet.create({
+export const wishScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white
@@ -56,7 +56,7 @@ export const homeStyles = StyleSheet.create({
 
   floatingButtonContainer: {
     position: 'absolute',
-    bottom: SPACING.lg,
+    bottom: 90,
     right: SPACING.lg
   },
 

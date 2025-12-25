@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import Button from '../../components/Button/Button'
 import WishItem from '../../components/WishItem/WishItem'
-import { homeStyles } from './HomeScreen.styles'
+import { wishScreenStyles } from './WishScreen.styles'
 
 interface Wish {
   id: string
@@ -14,7 +14,7 @@ interface Wish {
   createdAt: string
 }
 
-export default function HomeScreen({ navigation }: any) {
+export default function WishScreen({ navigation }: any) {
   const [wishes, setWishes] = useState<Wish[]>([
     {
       id: '1',
@@ -25,7 +25,7 @@ export default function HomeScreen({ navigation }: any) {
       createdAt: '2024-01-01'
     },
     {
-      id: '2', 
+      id: '2',
       title: 'Nike Air Jordan 1',
       description: 'Classic sneakers in black and red',
       price: 170,
@@ -57,12 +57,12 @@ export default function HomeScreen({ navigation }: any) {
   const sortedWishes = wishes.sort((a, b) => a.priority - b.priority)
 
   const renderEmptyState = () => (
-    <View style={homeStyles.emptyState}>
-      <Text style={homeStyles.emptyTitle}>No wishes yet!</Text>
-      <Text style={homeStyles.emptySubtitle}>
+    <View style={wishScreenStyles.emptyState}>
+      <Text style={wishScreenStyles.emptyTitle}>No wishes yet!</Text>
+      <Text style={wishScreenStyles.emptySubtitle}>
         Start building your wishlist by adding your first wish
       </Text>
-      <Button 
+      <Button
         title="Add Your First Wish"
         onPress={handleAddWish}
       />
@@ -79,10 +79,10 @@ export default function HomeScreen({ navigation }: any) {
   )
 
   return (
-    <View style={homeStyles.container}>
-      <View style={homeStyles.header}>
-        <Text style={homeStyles.title}>My Wishlist</Text>
-        <Text style={homeStyles.subtitle}>
+    <View style={wishScreenStyles.container}>
+      <View style={wishScreenStyles.header}>
+        <Text style={wishScreenStyles.title}>My Wishlist</Text>
+        <Text style={wishScreenStyles.subtitle}>
           {wishes.length === 0 ? 'Start your journey' : `${wishes.length} wishes`}
         </Text>
       </View>
@@ -91,17 +91,17 @@ export default function HomeScreen({ navigation }: any) {
         data={sortedWishes}
         renderItem={renderWishItem}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={homeStyles.listContainer}
+        contentContainerStyle={wishScreenStyles.listContainer}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderEmptyState}
       />
 
-      <View style={homeStyles.floatingButtonContainer}>
-        <TouchableOpacity 
-          style={homeStyles.floatingButton}
+      <View style={wishScreenStyles.floatingButtonContainer}>
+        <TouchableOpacity
+          style={wishScreenStyles.floatingButton}
           onPress={handleAddWish}
         >
-          <Text style={homeStyles.floatingButtonText}>+</Text>
+          <Text style={wishScreenStyles.floatingButtonText}>+</Text>
         </TouchableOpacity>
       </View>
     </View>
